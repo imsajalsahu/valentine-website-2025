@@ -16,9 +16,26 @@
         <!-- Hearts and bears will be added here by JavaScript -->
     </div>
 
+    <!-- Cute Popup Modal -->
+    <div class="popup-modal hidden" id="cutePopup">
+        <div class="popup-content">
+            <span class="popup-close" onclick="closePopup()">&times;</span>
+            <div class="popup-emoji">💕</div>
+            <h3 id="popupTitle">You're Amazing!</h3>
+            <p id="popupMessage">I love you so much!</p>
+            <button class="popup-btn" onclick="closePopup()">Close ❤️</button>
+        </div>
+    </div>
+
     <!-- Main Content Container -->
     <div class="container">
         <h1 id="valentineTitle"></h1>
+        
+        <!-- Image Section -->
+        <div class="image-section">
+            <img id="valentineImage" src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=400&q=80" alt="You are beautiful" class="valentine-image">
+            <div class="image-caption">💕 You are beautiful 💕</div>
+        </div>
         
         <!-- Music Player -->
         <div id="musicControls" class="music-controls">
@@ -32,18 +49,30 @@
         <!-- First Question -->
         <div class="question-section" id="question1">
             <h2 id="question1Text"></h2>
-            <button class="cute-btn" onclick="moveButton(this)" id="yesBtn1"></button>
-            <button class="cute-btn" onclick="moveButton(this)" id="noBtn1"></button>
-            <!-- CUSTOMIZE: Secret answer text -->
+            <button class="cute-btn" onclick="handleYesClick(1)" id="yesBtn1"></button>
+            <button class="cute-btn no-btn" id="noBtn1"></button>
             <div class="secret-answer">
                 <button class="cute-btn special" onclick="showNextQuestion(2)" id="secretAnswerBtn"></button>
             </div>
         </div>
 
-        <!-- Second Question (Love Meter) -->
+        <!-- Second Question (Funny) -->
         <div class="question-section hidden" id="question2">
             <h2 id="question2Text"></h2>
-            <!-- Love meter settings: min="0" max="10000" -->
+            <button class="cute-btn" onclick="handleYesClick(2)" id="yesBtn2"></button>
+            <button class="cute-btn no-btn" id="noBtn2"></button>
+        </div>
+
+        <!-- Third Question (Smile) -->
+        <div class="question-section hidden" id="question3">
+            <h2 id="question3Text"></h2>
+            <button class="cute-btn" onclick="handleYesClick(3)" id="yesBtn3"></button>
+            <button class="cute-btn no-btn" id="noBtn3"></button>
+        </div>
+
+        <!-- Fourth Question (Love Meter) -->
+        <div class="question-section hidden" id="question4">
+            <h2 id="question4Text"></h2>
             <div class="love-meter">
                 <input type="range" min="0" max="10000" value="100" class="slider" id="loveMeter">
                 <p>
@@ -51,14 +80,21 @@
                     <span id="extraLove" class="hidden"></span>
                 </p>
             </div>
-            <button class="cute-btn" onclick="showNextQuestion(3)" id="nextBtn"></button>
+            <button class="cute-btn" onclick="showNextQuestion(5)" id="nextBtn"></button>
         </div>
 
-        <!-- Final Question -->
-        <div class="question-section hidden" id="question3">
-            <h2 id="question3Text"></h2>
-            <button class="cute-btn final-yes" onclick="celebrate()" id="yesBtn3"></button>
-            <button class="cute-btn" onclick="moveButton(this)" id="noBtn3"></button>
+        <!-- Fifth Question (Travel) -->
+        <div class="question-section hidden" id="question5">
+            <h2 id="question5Text"></h2>
+            <button class="cute-btn" onclick="handleYesClick(5)" id="yesBtn5"></button>
+            <button class="cute-btn no-btn" id="noBtn5"></button>
+        </div>
+
+        <!-- Sixth Question (Final) -->
+        <div class="question-section hidden" id="question6">
+            <h2 id="question6Text"></h2>
+            <button class="cute-btn final-yes" onclick="celebrate()" id="yesBtn6"></button>
+            <button class="cute-btn no-btn" id="noBtn6"></button>
         </div>
 
         <!-- CUSTOMIZE: Celebration message -->
@@ -74,4 +110,4 @@
     <script src="theme.js"></script>
     <script src="script.js"></script>
 </body>
-</html> 
+</html>

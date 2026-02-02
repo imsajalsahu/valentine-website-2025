@@ -3,65 +3,86 @@
 // ============================================
 
 const CONFIG = {
-    // Your Valentine's name that will appear in the title
-    // Example: "Jade", "Sarah", "Mike"
-    valentineName: "Jade",
+    // Valentine's name
+    valentineName: "Yeshu",
 
-    // The title that appears in the browser tab
-    // You can use emojis! 💝 💖 💗 💓 💞 💕
-    pageTitle: "Will You Be My Valentine? 💝",
+    // Browser tab title
+    pageTitle: "Yeshu, will you be my Valentine? 💝🥺",
 
-    // Floating emojis that appear in the background
-    // Find more emojis at: https://emojipedia.org
+    // Floating emojis
     floatingEmojis: {
-        hearts: ['❤️', '💖', '💝', '💗', '💓'],  // Heart emojis
-        bears: ['🧸', '🐻']                       // Cute bear emojis
+        hearts: ['❤️', '💖', '💝', '💗', '💓', '💕'],
+        bears: ['🧸', '🐻', '💑']
     },
 
-    // Questions and answers
-    // Customize each question and its possible responses
+    // Questions flow (Hinglish + emotional)
     questions: {
         first: {
-            text: "Do you like me?",                                    // First interaction
-            yesBtn: "Yes",                                             // Text for "Yes" button
-            noBtn: "No",                                               // Text for "No" button
-            secretAnswer: "I don't like you, I love you! ❤️"           // Secret hover message
+            text: "Yeshu, sach bataun… mujhe tu bohot pasand hai 🥺❤️\nTujhe bhi thoda sa feel hota hai?",
+            yesBtn: "Haan 😌",
+            noBtn: "Hmm 🤔",
+            secretAnswer: "Thoda sa nahi… bohot zyada ❤️"
         },
         second: {
-            text: "How much do you love me?",                          // For the love meter
-            startText: "This much!",                                   // Text before the percentage
-            nextBtn: "Next ❤️"                                         // Text for the next button
+            text: "Kabhi kabhi mai insecure ho jata hu 😞\nPar tu samajh leti hai na?",
+            yesBtn: "Haan samajhti hu 💕",
+            noBtn: "Kabhi kabhi",
+            secretAnswer: "Aur isi baat pe mai tujhse aur pyaar karta hu ❤️"
         },
         third: {
-            text: "Will you be my Valentine on February 14th, 2025? 🌹", // The big question!
-            yesBtn: "Yes!",                                             // Text for "Yes" button
-            noBtn: "No"                                                 // Text for "No" button
+            text: "Tu jaanti hai na… tu meri safe place hai 🫶",
+            yesBtn: "Always 🥰",
+            noBtn: "Sochungi 😛",
+            secretAnswer: "Tere saath hi toh sab theek lagta hai 💘"
+        },
+        fourth: {
+            text: "Mai tujhe kitna pyaar karta hu… thoda explain karu? 💕",
+            startText: "Itna sa nahi…",
+            nextBtn: "Aur zyada ❤️"
+        },
+        fifth: {
+            text: "Past ki galtiyon ke liye sorry Yeshu 🥺\nPar kya tu mere saath future banana chahegi?",
+            yesBtn: "Haan ❤️",
+            noBtn: "Dekh lenge",
+            secretAnswer: "Promise karta hu, better version ban ke dikhaunga 🫂"
+        },
+        sixth: {
+            text: "Toh final sawaal… 🌹\nYeshu, will you be my Valentine? ❤️",
+            yesBtn: "Yes, forever 💕",
+            noBtn: "No 🙈"
         }
     },
 
+  
     // Love meter messages
-    // They show up depending on how far they slide the meter
     loveMessages: {
-        extreme: "WOOOOW You love me that much?? 🥰🚀💝",  // Shows when they go past 5000%
-        high: "To infinity and beyond! 🚀💝",              // Shows when they go past 1000%
-        normal: "And beyond! 🥰"                           // Shows when they go past 100%
+        extreme: "Itna pyaar?! 😍💝 Meri jaan le legi kya 🥰",
+        high: "Bas ab aur nahi… dil full ho gaya ❤️✨",
+        normal: "Perfect amount of love 💕",
+        veryHigh: "Yeshu tu bohot zyada cute hai 😭💘"
     },
 
-    // Messages that appear after they say "Yes!"
+    // Final celebration popup
     celebration: {
-        title: "Yay! I'm the luckiest person in the world! 🎉💝💖💝💓",
-        message: "Now come get your gift, a big warm hug and a huge kiss!",
-        emojis: "🎁💖🤗💝💋❤️💕"  // These will bounce around
+        title: "🎆 YESHU SAID YES! 🎆 💕✨",
+        message:
+            "Thank you meri zindagi ka hissa banne ke liye ❤️\n" +
+            "Mai perfect nahi hu, par tere liye better banne ki poori koshish karunga.\n\n" +
+            "Valentine sirf ek din ka nahi,\n" +
+            "tu meri har din ki Valentine hai 🫶🌹",
+        emojis: "🎁💖🤗💝💋❤️💕🌹✨🎊🎉🎈🌟💎👑💘🔥🌈🎆🌺🦋🎀💞"
     },
 
     // Color scheme for the website
     // Use https://colorhunt.co or https://coolors.co to find beautiful color combinations
     colors: {
-        backgroundStart: "#ffafbd",      // Gradient start (try pastel colors for a soft look)
-        backgroundEnd: "#ffc3a0",        // Gradient end (should complement backgroundStart)
-        buttonBackground: "#ff6b6b",     // Button color (should stand out against the background)
-        buttonHover: "#ff8787",          // Button hover color (slightly lighter than buttonBackground)
-        textColor: "#ff4757"             // Text color (make sure it's readable!)
+        backgroundStart: "#0F2027",      // Deep dark blue
+        backgroundEnd: "#203A43",        // Dark teal-blue  
+        buttonBackground: "#D4AF37",     // Golden color
+        buttonHover: "#FFD700",          // Bright gold
+        textColor: "#FFFFFF",            // White text
+        accentColor: "#E94B3C",          // Rose-red accent
+        secondaryAccent: "#6A4C93"       // Purple accent
     },
 
     // Animation settings

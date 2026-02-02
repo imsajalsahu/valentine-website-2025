@@ -1,7 +1,51 @@
 // Initialize configuration
 const config = window.VALENTINE_CONFIG;
 
-// Validate configuration
+// Popup messages for cute interactions
+const popupMessages = [
+    { title: "That's Sweet! 😊", message: "You're making my heart happy!" },
+    { title: "I Love You! 💕", message: "You mean everything to me!" },
+    { title: "You're The Best! ⭐", message: "I'm so lucky to have you!" },
+    { title: "Smile! 😄", message: "Your smile makes me smile!" },
+    { title: "Forever Yours 💕", message: "I want to spend forever with you!" },
+    { title: "You Light Up My Life! ✨", message: "Every moment with you is a blessing!" },
+    { title: "My Heart is Yours! 💝", message: "You complete me perfectly!" },
+    { title: "Beautiful Soul 🌟", message: "Inside and out, you're amazing!" },
+    { title: "Absolutely! 🎉", message: "I couldn't imagine life without you!" },
+    { title: "Definitely Yes! 💖", message: "You're my greatest treasure!" },
+];
+
+// Show cute popup
+function showPopup(title, message) {
+    const popup = document.getElementById('cutePopup');
+    document.getElementById('popupTitle').textContent = title;
+    document.getElementById('popupMessage').textContent = message;
+    popup.classList.remove('hidden');
+}
+
+// Close popup
+function closePopup() {
+    document.getElementById('cutePopup').classList.add('hidden');
+}
+
+// Handle Yes button click with popup
+function handleYesClick(questionNumber) {
+    const randomPopup = popupMessages[Math.floor(Math.random() * popupMessages.length)];
+    showPopup(randomPopup.title, randomPopup.message);
+    
+    // After popup, show next question
+    setTimeout(() => {
+        closePopup();
+        const nextQuestion = questionNumber + 1;
+        if (nextQuestion <= 6) {
+            if (nextQuestion === 4) {
+                showNextQuestion(4);
+            } else {
+                showNextQuestion(nextQuestion);
+            }
+        }
+    }, 2000);
+}
 function validateConfig() {
     const warnings = [];
 
@@ -69,13 +113,31 @@ window.addEventListener('DOMContentLoaded', () => {
     
     // Set second question texts
     document.getElementById('question2Text').textContent = config.questions.second.text;
-    document.getElementById('startText').textContent = config.questions.second.startText;
-    document.getElementById('nextBtn').textContent = config.questions.second.nextBtn;
+    document.getElementById('yesBtn2').textContent = config.questions.second.yesBtn;
+    document.getElementById('noBtn2').textContent = config.questions.second.noBtn;
     
     // Set third question texts
     document.getElementById('question3Text').textContent = config.questions.third.text;
     document.getElementById('yesBtn3').textContent = config.questions.third.yesBtn;
     document.getElementById('noBtn3').textContent = config.questions.third.noBtn;
+    
+    // Set fourth question texts (love meter)
+    document.getElementById('question4Text').textContent = config.questions.fourth.text;
+    document.getElementById('startText').textContent = config.questions.fourth.startText;
+    document.getElementById('nextBtn').textContent = config.questions.fourth.nextBtn;
+    
+    // Set fifth question texts
+    document.getElementById('question5Text').textContent = config.questions.fifth.text;
+    document.getElementById('yesBtn5').textContent = config.questions.fifth.yesBtn;
+    document.getElementById('noBtn5').textContent = config.questions.fifth.noBtn;
+    
+    // Set sixth question texts
+    document.getElementById('question6Text').textContent = config.questions.sixth.text;
+    document.getElementById('yesBtn6').textContent = config.questions.sixth.yesBtn;
+    document.getElementById('noBtn6').textContent = config.questions.sixth.noBtn;
+
+    // Setup cursor tracking for No buttons
+    setupNoButtonTracking();
 
     // Create initial floating elements
     createFloatingElements();
@@ -83,6 +145,54 @@ window.addEventListener('DOMContentLoaded', () => {
     // Setup music player
     setupMusicPlayer();
 });
+
+// Cursor-aware No button tracking
+function setupNoButtonTracking() {
+    const noButtons = document.querySelectorAll('.no-btn');
+    const escapeDistance = 150; // Start fleeing when cursor is 150px away
+    const fleeDistance = 200; // Flee this far away from cursor
+    
+    document.addEventListener('mousemove', (e) => {
+        noButtons.forEach(btn => {
+            if (!btn.classList.contains('hidden') && btn.parentElement.parentElement.style.display !== 'none') {
+                const rect = btn.getBoundingClientRect();
+                const btnCenterX = rect.left + rect.width / 2;
+                const btnCenterY = rect.top + rect.height / 2;
+                
+                // Distance from cursor to button center
+                const distance = Math.sqrt(
+                    Math.pow(e.clientX - btnCenterX, 2) +
+                    Math.pow(e.clientY - btnCenterY, 2)
+                );
+                
+                // If cursor is within escape distance, move button away aggressively
+                if (distance < escapeDistance) {
+                    // Calculate angle away from cursor
+                    const angle = Math.atan2(btnCenterY - e.clientY, btnCenterX - e.clientX);
+                    
+                    // Add random unpredictability (random angle offset)
+                    const randomAngle = (Math.random() - 0.5) * Math.PI / 3;
+                    const finalAngle = angle + randomAngle;
+                    
+                    // Calculate new position further away
+                    const newX = e.clientX + Math.cos(finalAngle) * fleeDistance;
+                    const newY = e.clientY + Math.sin(finalAngle) * fleeDistance;
+                    
+                    // Ensure button stays within viewport with padding
+                    const padding = 20;
+                    const finalX = Math.max(padding, Math.min(newX, window.innerWidth - rect.width - padding));
+                    const finalY = Math.max(padding, Math.min(newY, window.innerHeight - rect.height - padding));
+                    
+                    btn.style.position = 'fixed';
+                    btn.style.left = finalX + 'px';
+                    btn.style.top = finalY + 'px';
+                    btn.style.zIndex = '10';
+                    btn.style.transition = 'all 0.15s ease-out'; // Fast, snappy movement
+                }
+            }
+        });
+    });
+}
 
 // Create floating hearts and bears
 function createFloatingElements() {
@@ -155,6 +265,9 @@ loveMeter.addEventListener('input', () => {
         if (value >= 5000) {
             extraLove.classList.add('super-love');
             extraLove.textContent = config.loveMessages.extreme;
+        } else if (value >= 2000) {
+            extraLove.classList.add('super-love');
+            extraLove.textContent = config.loveMessages.veryHigh;
         } else if (value > 1000) {
             extraLove.classList.remove('super-love');
             extraLove.textContent = config.loveMessages.high;
@@ -175,28 +288,74 @@ window.addEventListener('load', setInitialPosition);
 
 // Celebration function
 function celebrate() {
-    document.querySelectorAll('.question-section').forEach(q => q.classList.add('hidden'));
-    const celebration = document.getElementById('celebration');
-    celebration.classList.remove('hidden');
+    // Show celebration popup first
+    showPopup("🎉 YES! YESHU SAID YES! 🎉", "I'm the happiest person alive right now! 💕✨");
     
-    // Set celebration messages
-    document.getElementById('celebrationTitle').textContent = config.celebration.title;
-    document.getElementById('celebrationMessage').textContent = config.celebration.message;
-    document.getElementById('celebrationEmojis').textContent = config.celebration.emojis;
+    // Create sparkles immediately
+    createSparkles();
     
-    // Create heart explosion effect
-    createHeartExplosion();
+    setTimeout(() => {
+        closePopup();
+        document.querySelectorAll('.question-section').forEach(q => q.classList.add('hidden'));
+        const celebration = document.getElementById('celebration');
+        celebration.classList.remove('hidden');
+        
+        // Set celebration messages
+        document.getElementById('celebrationTitle').textContent = config.celebration.title;
+        document.getElementById('celebrationMessage').textContent = config.celebration.message;
+        document.getElementById('celebrationEmojis').textContent = config.celebration.emojis;
+        
+        // Create heart explosion effect
+        createHeartExplosion();
+        
+        // Create more sparkles
+        setInterval(() => {
+            createSparkles();
+        }, 800);
+    }, 2500);
+}
+
+// Create sparkle particles
+function createSparkles() {
+    const container = document.querySelector('.floating-elements');
+    const sparkles = ['✨', '⭐', '💫', '🌟', '💥', '✨'];
+    
+    for (let i = 0; i < 15; i++) {
+        const sparkle = document.createElement('div');
+        const randomSparkle = sparkles[Math.floor(Math.random() * sparkles.length)];
+        sparkle.innerHTML = randomSparkle;
+        sparkle.className = 'heart';
+        sparkle.style.fontSize = Math.random() * 1.5 + 0.8 + 'rem';
+        sparkle.style.animation = `float ${Math.random() * 3 + 2}s ease-out forwards`;
+        sparkle.style.opacity = '0.8';
+        container.appendChild(sparkle);
+        
+        const x = Math.random() * window.innerWidth;
+        const y = Math.random() * window.innerHeight;
+        sparkle.style.left = x + 'px';
+        sparkle.style.top = y + 'px';
+        
+        setTimeout(() => sparkle.remove(), 5000);
+    }
 }
 
 // Create heart explosion animation
 function createHeartExplosion() {
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 80; i++) {
         const heart = document.createElement('div');
         const randomHeart = config.floatingEmojis.hearts[Math.floor(Math.random() * config.floatingEmojis.hearts.length)];
         heart.innerHTML = randomHeart;
         heart.className = 'heart';
+        heart.style.fontSize = Math.random() * 2 + 1 + 'rem';
+        heart.style.animation = `float ${Math.random() * 5 + 3}s ease-out forwards`;
         document.querySelector('.floating-elements').appendChild(heart);
-        setRandomPosition(heart);
+        
+        const x = Math.random() * window.innerWidth;
+        const y = Math.random() * window.innerHeight;
+        heart.style.left = x + 'px';
+        heart.style.top = y + 'px';
+        
+        setTimeout(() => heart.remove(), 8000);
     }
 }
 

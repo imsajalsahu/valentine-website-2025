@@ -9,6 +9,14 @@ function applyTheme() {
     root.style.setProperty('--button-color', config.colors.buttonBackground);
     root.style.setProperty('--button-hover', config.colors.buttonHover);
     root.style.setProperty('--text-color', config.colors.textColor);
+    
+    // Apply accent colors if available
+    if (config.colors.accentColor) {
+        root.style.setProperty('--accent-color', config.colors.accentColor);
+    }
+    if (config.colors.secondaryAccent) {
+        root.style.setProperty('--secondary-accent', config.colors.secondaryAccent);
+    }
 
     // Apply animation settings
     root.style.setProperty('--float-duration', config.animations.floatDuration);
